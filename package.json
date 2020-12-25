@@ -1,0 +1,12 @@
+{
+  "name": "ddbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "a": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
+}
