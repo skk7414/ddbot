@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const token = 'NzkyMDYwNDkyMDU4NzIyMzM1.X-YN0Q.DFZlT65_Syu1Zgg06rxXN6MB3H0';
+const token = process.argv.length == 2 ? process.env.token : ""
 
 
 client.on('message',(message) => {
