@@ -1,17 +1,15 @@
 const Discord = require('discord.js');
-const client = 'NzkyMDYwNDkyMDU4NzIyMzM1.X-YN0Q.U9qdU7K1VsnQ-Ppw-ssPUx2l3n4'
-const token = process.env.token;
+const client = new Discord.Client();
+const token = process.env.token ;
 
-
-client.on('message',(message) => {
-    console.log('on!');
+client.on('ready', () => {
+  console.log('켰다.');
 });
 
-
 client.on('message', (message) => {
-    if(message.content === 'ping') {
-        message.reply('pong')
-    }
+  if(message.content === 'ping') {
+    message.reply('pong');
+  }
 });
 
 // 청소
@@ -67,4 +65,4 @@ client.on('messageDelete', async message => {
     }
   })
 
-client.login(token);
+  client.login(token);
