@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const client = 'NzkyMDYwNDkyMDU4NzIyMzM1.X-YN0Q.U9qdU7K1VsnQ-Ppw-ssPUx2l3n4'
 const token = process.env.token;
 
 
