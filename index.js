@@ -1,16 +1,35 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-const token = 'NzkyMDYwNDkyMDU4NzIyMzM1.X-YN0Q.8qhYIdBiJxeOt7_zwesnbF1UVPE';
+const Discord = require("discord.js")
+const intent_list = new Discord.Intents(["GUILD_MEMBERS", "GUILD_MESSAGES", "GUILDS", "GUILD_INVITES"])
+const client = new Discord.Client({ ws: { intents: intent_list } })
+const token = process.argv.length == 2 ? process.env.token : "" // heroku를 사용하지 않을꺼라면 const token = "디스코드 봇 토큰" 으로 바꿔주세요.
+const welcomeChannelName = "" // 입장 시 환영메시지를 전송 할 채널의 이름을 입력하세요.
+const byeChannelName = "" // 퇴장 시 메시지를 전송 할 채널의 이름을 입력하세요.
+const welcomeChannelComment = "이서버에 오신걸 환영합니다.✨" // 입장 시 전송할 환영메시지의 내용을 입력하세요.
+const byeChannelComment = "안녕히가세요.✨" // 퇴장 시 전송할 메시지의 내용을 입력하세요.
+const roleName = "게스트" // 입장 시 지급 할 역할의 이름을 적어주세요.
 
-client.on('ready', () => {
-  console.log('켰다.');
-});
+client.on("ready", () => {
+  console.log("켰다.")
+  client.user.setPresence({ activity: { name: "24시간 서버관리중[/help]" }, status: "online" })
+})
 
-client.on('message', (message) => {
-  if(message.content === 'ping') {
-    message.reply('pong');
-  }
-});
+client.on("guildMemberAdd", (member) => {
+  const guild = member.guild
+  const newUser = member.user
+  const welcomeChannel = guild.channels.cache.find((channel) => channel.name == welcomeChannelName)
+
+  welcomeChannel.send(`<@${newUser.id}> ${welcomeChannelComment}\n`) // 올바른 채널명을 기입하지 않았다면, Cannot read property 'send' of undefined; 오류가 발생합니다.
+  member.roles.add(guild.roles.cache.find((role) => role.name === roleName).id)
+})
+
+client.on("guildMemberRemove", (member) => {
+  const guild = member.guild
+  const deleteUser = member.user
+  const byeChannel = guild.channels.cache.find((channel) => channel.name == byeChannelName)
+
+  byeChannel.send(`<@${deleteUser.id}> ${byeChannelComment}\n`) // 올바른 채널명을 기입하지 않았다면, Cannot read property 'send' of undefined; 오류가 발생합니다.
+})
+
 
 // 청소
 client.on('messageUpdate', async message => {
